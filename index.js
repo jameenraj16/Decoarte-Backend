@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cors())
 dotenv.config()
 
-const port = process.env.PORT
+const port = 5000
 const password = process.env.MONGODB_PASSWORD || "YFBEFaktbSAk2ixX"
 
 
