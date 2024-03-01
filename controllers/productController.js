@@ -75,7 +75,7 @@ export const newCollection = async (req, res) => {
 //Popular in Sofa
 export const popularSofa = async (req, res) => {
     try {
-        let products = await Products.find({category:"Sofa"})
+        let products = await Products.find({})
         let popularSofa = products.slice(0,4)
         console.log("Popular in Sofa fetched successfully");
         res.status(200).json(popularSofa)
