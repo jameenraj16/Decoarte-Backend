@@ -3,17 +3,17 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import productRouter from './routes/productRoutes.js'
 import userRouter from './routes/userRoutes.js'
+import path from "path"
+import multer from 'multer'
 
 const app = express()
+
+app.use(express.json())
 app.use(cors())
-app.use(express.json({limit:"5mb"}))
 
 const port = 5000
 const password = "YFBEFaktbSAk2ixX"
 
-/* API */
-app.use("/product", productRouter)
-app.use("/user",userRouter )
 
 /* MongoDB connection */
 mongoose.connect(
@@ -23,3 +23,31 @@ mongoose.connect(
     .then(() => console.clear())
     .then(() => console.log("Connected to MongoDB on Port: " + port))
     .catch((err) => console.log(err))
+
+/* API */
+app.get('/', (req, res) => {
+    res.send("Express App is Running...")
+})
+app.use("/product", productRouter)
+app.use("/user", userRouter)
+const storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+    }
+})
+const upload = multer({ storage: storage })
+
+//Createing the upload endpoint
+app.use('/images', express.static('upload/images'))
+app.post('/upload', upload.single('product'), (req, res) => {
+    try {
+        res.json({
+            success: 1,
+            message: 'File uploaded successfully',
+            image_URL: `http://localhost:${port}/images/${req.file.filename}`
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
