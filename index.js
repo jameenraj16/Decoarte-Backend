@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import dotenv from "dotenv"
 import productRouter from './routes/productRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import path from "path"
@@ -10,9 +11,10 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+dotenv.config()
 
-const port = 5000
-const password = "YFBEFaktbSAk2ixX"
+const port = process.env.PORT
+const password = process.env.MONGODB_PASSWORD || "YFBEFaktbSAk2ixX"
 
 
 /* MongoDB connection */
