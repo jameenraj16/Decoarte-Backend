@@ -47,7 +47,7 @@ app.post('/upload', upload.single('product'), (req, res) => {
         res.json({
             success: 1,
             message: 'File uploaded successfully',
-            image_URL: `http://localhost:${port}/images/${req.file.filename}`
+            image_URL: `https://decoarte-backend.onrender.com/images/${req.file.filename}`
         })
     } catch (error) {
         console.log(error);
