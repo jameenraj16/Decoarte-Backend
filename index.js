@@ -23,7 +23,7 @@ mongoose.connect(
 )
     .then(() => app.listen(port))
     .then(() => console.clear())
-    .then(() => console.log("Connected to MongoDB on Port: " + port))
+    .then(() => console.log(`Connected to MongoDB on Port:${port}`))
     .catch((err) => console.log(err))
 
 /* API */
